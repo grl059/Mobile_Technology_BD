@@ -1,5 +1,5 @@
 name: mood_tracker
-description: A soft mint and lilac mood tracker Flutter prototype.
+description: Mindful - өдөр тутмын мэдрэмжээ тэмдэглэх Flutter аппликейшн.
 publish_to: "none"
 version: 1.0.0+1
 
@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^6.2.1
+  shared_preferences: ^2.3.2
+  crypto: ^3.0.3
 
 dev_dependencies:
   flutter_test:

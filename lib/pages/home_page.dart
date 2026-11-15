@@ -5,6 +5,7 @@ import '../models/models.dart';
 import '../widgets/widgets.dart';
 import 'achievements_page.dart';
 import 'breathing_page.dart';
+import 'companion_sheet.dart';
 import 'mood_entry_sheet.dart';
 import 'notifications_page.dart';
 
@@ -37,6 +38,10 @@ class HomePage extends StatelessWidget {
           title: s.f('home.greeting', {'name': name}),
           onNotifications: () => openNotifications(context),
         ),
+        if (app.companion.size != CompanionSize.hidden) ...[
+          _CompanionCard(entry: todayEntry, streak: streak),
+          const SizedBox(height: 16),
+        ],
         Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
@@ -235,6 +240,97 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+/// Нүүр хуудсан дээрх найз: өнөөдрийн мэдрэмж, дарааллаас хамаарч үг хэлнэ.
+class _CompanionCard extends StatelessWidget {
+  const _CompanionCard({required this.entry, required this.streak});
+
+  final MoodEntry? entry;
+  final int streak;
+
+  String _say(S s) {
+    final e = entry;
+    if (e == null) {
+      return streak >= 3
+          ? s.f('comp.say.streakAsk', {'n': '$streak'})
+          : s('comp.say.ask');
+    }
+    switch (e.mood) {
+      case MoodType.joyful:
+      case MoodType.happy:
+        return s('comp.say.good');
+      case MoodType.calm:
+        return s('comp.say.calm');
+      case MoodType.sad:
+        return s('comp.say.sad');
+      case MoodType.angry:
+        return s('comp.say.angry');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final app = context.app;
+    final s = context.s;
+    final p = context.pal;
+    final settings = app.companion;
+    final large = settings.size == CompanionSize.large;
+    final mood = entry?.mood;
+    final needsCalm = mood == MoodType.sad || mood == MoodType.angry;
+
+    return SoftCard(
+      key: const Key('home_companion'),
+      padding: EdgeInsets.all(large ? 16 : 12),
+      onTap: () => showCompanionSheet(context),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CompanionAvatar(
+            kind: settings.kind,
+            mood: mood,
+            size: large ? 104 : 56,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Eyebrow(s('comp.my')),
+                Text(
+                  s(settings.nameKey),
+                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: p.soft,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Text(
+                    _say(s),
+                    style: const TextStyle(fontSize: 12.5, height: 1.5),
+                  ),
+                ),
+                if (needsCalm)
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: () => pushPage<void>(context, const BreathingPage()),
+                      child: Text(
+                        s('breath.suggestAction'),
+                        style: TextStyle(color: p.accent, fontWeight: FontWeight.w800),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

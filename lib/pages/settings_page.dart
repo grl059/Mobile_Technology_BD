@@ -4,6 +4,7 @@ import '../core/core.dart';
 import '../state/app_scope.dart';
 import '../widgets/widgets.dart';
 import 'about_page.dart';
+import 'companion_sheet.dart';
 import 'help_page.dart';
 import 'language_page.dart';
 import 'notifications_page.dart';
@@ -104,6 +105,16 @@ class SettingsPage extends StatelessWidget {
               title: s('settings.theme'),
               subtitle: themeName,
               onTap: () => pushPage<void>(context, const ThemePage()),
+            ),
+            SettingTile(
+              key: const Key('settings_companion'),
+              icon: Icons.emoji_emotions_outlined,
+              iconColor: const Color(0xFFB8892F),
+              iconBackground: const Color(0xFFFBEFD0),
+              title: s('settings.companion'),
+              subtitle:
+                  '${s(app.companion.nameKey)} · ${s('comp.${app.companion.size.name}')}',
+              onTap: () => showCompanionSheet(context),
             ),
             SettingTile(
               icon: Icons.translate_rounded,

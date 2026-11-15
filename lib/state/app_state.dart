@@ -53,6 +53,9 @@ class AppState extends ChangeNotifier {
   int breathingSessions = 0;
   int breathingSeconds = 0;
 
+  /// Сонгосон найз ба түүний харагдах хэмжээ.
+  CompanionSettings companion = const CompanionSettings();
+
   bool get isLoggedIn => user != null;
 
   // ------------------------------------------------------------ Сэргээлт
@@ -142,6 +145,7 @@ class AppState extends ChangeNotifier {
   void _loadProgress() {
     _resetProgress();
     challenge = Challenge.tryParse(_readMap(_k('challenge')));
+    companion = CompanionSettings.fromJson(_readMap(_k('companion')));
     _readMap(_k('badges')).forEach((id, value) {
       if (value is String && achievementIds.contains(id)) {
         _unlocked[id] = value;
@@ -304,6 +308,7 @@ class AppState extends ChangeNotifier {
     notifications = [];
     _dismissed = {};
     _resetProgress();
+    companion = const CompanionSettings();
     reminder = const ReminderSettings();
     _prefs.remove('session');
     notifyListeners();
@@ -544,6 +549,14 @@ class AppState extends ChangeNotifier {
     final fresh = _syncAchievements();
     notifyListeners();
     return fresh;
+  }
+
+  /// Найзын дүр, хэмжээг хадгална.
+  void setCompanion(CompanionSettings value) {
+    if (user == null) return;
+    companion = value;
+    _prefs.setString(_k('companion'), jsonEncode(value.toJson()));
+    notifyListeners();
   }
 
   // ------------------------------------------------------------- Сануулга

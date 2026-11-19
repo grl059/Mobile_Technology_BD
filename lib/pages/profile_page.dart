@@ -132,7 +132,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Center(
                   child: Text(
                     s('profile.pickColor'),
-                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -155,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           child: _avatar == i
-                              ? const Icon(Icons.check_rounded, size: 18, color: Colors.white)
+                              ? const Icon(AppIcons.check, size: 18, color: Colors.white)
                               : null,
                         ),
                       ),
@@ -191,9 +191,9 @@ class _ProfilePageState extends State<ProfilePage> {
                         readOnly: true,
                         onTap: _pickBirthday,
                         suffix: _birthday == null
-                            ? Icon(Icons.calendar_today_outlined, size: 18, color: p.muted)
+                            ? Icon(AppIcons.calendarBlank, size: 18, color: p.muted)
                             : IconButton(
-                                icon: Icon(Icons.close_rounded, size: 18, color: p.muted),
+                                icon: Icon(AppIcons.close, size: 18, color: p.muted),
                                 onPressed: () => setState(() {
                                   _birthday = null;
                                   _syncBirthdayText();
@@ -251,14 +251,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(
                       fontSize: 12,
                       color: Color(0xFFD9534F),
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
                 const SizedBox(height: 18),
                 PrimaryButton(
                   key: const Key('profile_save'),
-                  icon: Icons.check_rounded,
+                  icon: AppIcons.check,
                   label: s('profile.save'),
                   onTap: _save,
                 ),

@@ -49,16 +49,14 @@ class _HelpPageState extends State<HelpPage> {
             child: Column(
               children: [
                 CircleAvatar(
+                  radius: 22,
                   backgroundColor: p.accent,
-                  child: const Text(
-                    '?',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800),
-                  ),
+                  child: const Icon(AppIcons.questionMark, size: 22, color: Colors.white),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   s('help.banner'),
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -88,7 +86,7 @@ class _HelpPageState extends State<HelpPage> {
           const SizedBox(height: 12),
           PrimaryButton(
             key: const Key('help_send'),
-            icon: _sent ? Icons.check_rounded : Icons.send_outlined,
+            icon: _sent ? AppIcons.check : AppIcons.send,
             label: _sent ? s('help.sent') : s('help.send'),
             onTap: _send,
           ),

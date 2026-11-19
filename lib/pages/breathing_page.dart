@@ -225,7 +225,7 @@ class _BreathingPageState extends State<BreathingPage>
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 17,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                             height: 1.25,
                           ),
                         ),
@@ -234,7 +234,7 @@ class _BreathingPageState extends State<BreathingPage>
                             sub,
                             style: TextStyle(
                               fontSize: 34,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                               color: p.accent,
                             ),
                           ),
@@ -290,7 +290,7 @@ class _BreathingPageState extends State<BreathingPage>
       SettingsCard(
         children: [
           SettingTile(
-            icon: Icons.vibration_rounded,
+            icon: AppIcons.vibrate,
             iconColor: p.accent,
             iconBackground: p.highlight,
             title: s('breath.haptic'),
@@ -305,7 +305,7 @@ class _BreathingPageState extends State<BreathingPage>
       const SizedBox(height: 20),
       PrimaryButton(
         key: const Key('breath_start'),
-        icon: Icons.play_arrow_rounded,
+        icon: AppIcons.playFill,
         label: s('breath.start'),
         onTap: _start,
       ),
@@ -361,12 +361,12 @@ class _BreathingPageState extends State<BreathingPage>
               onPressed: _run == _Run.running ? _pause : _resume,
               icon: Icon(
                 _run == _Run.running
-                    ? Icons.pause_rounded
-                    : Icons.play_arrow_rounded,
+                    ? AppIcons.pauseFill
+                    : AppIcons.playFill,
               ),
               label: Text(
                 _run == _Run.running ? s('breath.pause') : s('breath.resume'),
-                style: const TextStyle(fontWeight: FontWeight.w700),
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               style: OutlinedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
@@ -384,7 +384,7 @@ class _BreathingPageState extends State<BreathingPage>
             onPressed: _stop,
             child: Text(
               s('breath.stop'),
-              style: TextStyle(color: p.muted, fontWeight: FontWeight.w700),
+              style: TextStyle(color: p.muted, fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -401,8 +401,8 @@ class _BreathingPageState extends State<BreathingPage>
         color: p.mint,
         child: Column(
           children: [
-            const Text('🌿', style: TextStyle(fontSize: 34)),
-            const SizedBox(height: 8),
+            IconBox(icon: AppIcons.lotus, color: p.forest, background: p.card, size: 56),
+            const SizedBox(height: 10),
             Text(
               s.f('breath.doneBody', {'n': '$_minutes'}),
               textAlign: TextAlign.center,
@@ -415,7 +415,7 @@ class _BreathingPageState extends State<BreathingPage>
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 12.5,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: p.forest,
                 ),
               ),
@@ -426,7 +426,7 @@ class _BreathingPageState extends State<BreathingPage>
       const SizedBox(height: 16),
       PrimaryButton(
         key: const Key('breath_again'),
-        icon: Icons.refresh_rounded,
+        icon: AppIcons.refresh,
         label: s('breath.again'),
         onTap: _reset,
       ),
@@ -436,7 +436,7 @@ class _BreathingPageState extends State<BreathingPage>
           onPressed: () => Navigator.of(context).maybePop(),
           child: Text(
             s('common.close'),
-            style: TextStyle(color: p.muted, fontWeight: FontWeight.w700),
+            style: TextStyle(color: p.muted, fontWeight: FontWeight.w600),
           ),
         ),
       ),

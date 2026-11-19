@@ -1,3 +1,4 @@
+export 'app_icons.dart';
 export 'context_ext.dart';
 export 'dates.dart';
 export 'l10n.dart';

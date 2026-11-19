@@ -66,23 +66,23 @@ class _MainShellState extends State<MainShell> with WidgetsBindingObserver {
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
         destinations: [
           NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            selectedIcon: const Icon(Icons.home_rounded),
+            icon: const Icon(AppIcons.house),
+            selectedIcon: const Icon(AppIcons.houseFill),
             label: s('nav.home'),
           ),
           NavigationDestination(
-            icon: const Icon(Icons.calendar_month_outlined),
-            selectedIcon: const Icon(Icons.calendar_month_rounded),
+            icon: const Icon(AppIcons.calendar),
+            selectedIcon: const Icon(AppIcons.calendarFill),
             label: s('nav.calendar'),
           ),
           NavigationDestination(
-            icon: const Icon(Icons.bar_chart_outlined),
-            selectedIcon: const Icon(Icons.bar_chart_rounded),
+            icon: const Icon(AppIcons.chart),
+            selectedIcon: const Icon(AppIcons.chartFill),
             label: s('nav.stats'),
           ),
           NavigationDestination(
-            icon: const Icon(Icons.settings_outlined),
-            selectedIcon: const Icon(Icons.settings_rounded),
+            icon: const Icon(AppIcons.gear),
+            selectedIcon: const Icon(AppIcons.gearFill),
             label: s('nav.settings'),
           ),
         ],

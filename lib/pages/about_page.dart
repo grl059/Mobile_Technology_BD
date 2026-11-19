@@ -36,17 +36,14 @@ class AboutPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Text(
-                'M',
-                style: TextStyle(fontSize: 36, color: p.onForest, fontFamily: 'serif'),
-              ),
+              child: Icon(AppIcons.lotus, size: 40, color: p.onForest),
             ),
           ),
           const SizedBox(height: 10),
           const Text(
             'Mindful',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 23, fontWeight: FontWeight.w800),
+            style: TextStyle(fontSize: 23, fontWeight: FontWeight.w700),
           ),
           Text(
             s('app.tagline'),
@@ -71,7 +68,7 @@ class AboutPage extends StatelessWidget {
               children: [
                 Text(
                   s('auth.heroTitle'),
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 Text(

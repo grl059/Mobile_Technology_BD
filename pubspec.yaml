@@ -9,7 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_fonts: ^6.2.1
   shared_preferences: ^2.3.2
   crypto: ^3.0.3
 
@@ -20,3 +19,28 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # Фонт болон icon-ууд апп дотор багтсан тул интернэтгүй үед ч
+  # бүх төхөөрөмж дээр адилхан харагдана.
+  fonts:
+    # Inter - Монгол кирилл (Ө, Ү) бүрэн дэмждэг цэвэрхэн UI фонт. (OFL)
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+          weight: 800
+    # Phosphor icons (MIT) - нимгэн шугаман болон дүүргэлттэй хувилбар.
+    # Ашиглах: lib/core/app_icons.dart
+    - family: Phosphor
+      fonts:
+        - asset: assets/fonts/Phosphor.ttf
+    - family: PhosphorFill
+      fonts:
+        - asset: assets/fonts/Phosphor-Fill.ttf

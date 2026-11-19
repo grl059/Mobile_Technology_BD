@@ -54,15 +54,20 @@ class _ReminderPageState extends State<ReminderPage> {
             color: p.warm,
             child: Row(
               children: [
-                const Text('🔔', style: TextStyle(fontSize: 34)),
-                const SizedBox(width: 13),
+                IconBox(
+                  icon: AppIcons.bellRinging,
+                  color: const Color(0xFFB87955),
+                  background: p.card,
+                  size: 50,
+                ),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         s('reminder.banner'),
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 2),
                       Text(
@@ -103,7 +108,7 @@ class _ReminderPageState extends State<ReminderPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         MiniButton(
-                          icon: Icons.remove_rounded,
+                          icon: AppIcons.minus,
                           onTap: () => setState(() => _hour = (_hour + 23) % 24),
                         ),
                         Column(
@@ -113,7 +118,7 @@ class _ReminderPageState extends State<ReminderPage> {
                               key: const Key('reminder_time'),
                               style: const TextStyle(
                                 fontSize: 30,
-                                fontWeight: FontWeight.w800,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
@@ -123,7 +128,7 @@ class _ReminderPageState extends State<ReminderPage> {
                           ],
                         ),
                         MiniButton(
-                          icon: Icons.add_rounded,
+                          icon: AppIcons.plus,
                           onTap: () => setState(() => _hour = (_hour + 1) % 24),
                         ),
                       ],
@@ -155,7 +160,7 @@ class _ReminderPageState extends State<ReminderPage> {
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: _days.contains(i) ? Colors.white : p.muted,
-                                  fontWeight: FontWeight.w700,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
@@ -175,7 +180,7 @@ class _ReminderPageState extends State<ReminderPage> {
           const SizedBox(height: 20),
           PrimaryButton(
             key: const Key('reminder_save'),
-            icon: Icons.check_rounded,
+            icon: AppIcons.check,
             label: s('reminder.save'),
             onTap: _save,
           ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 enum AppThemeMode { light, dark, nature }
 
@@ -126,35 +125,89 @@ AppPalette paletteFor(AppThemeMode mode) {
   }
 }
 
-ThemeData buildTheme(AppThemeMode mode, {bool googleFonts = true}) {
+/// Аппын үндсэн фонт (`assets/fonts/`-д багтсан, интернэт шаардлагагүй).
+const String appFontFamily = 'Inter';
+
+/// Material-ын анхны үсэг хоорондын зайг Inter фонтод тааруулна: жижиг текст
+/// 0, том гарчиг бага зэрэг шахуу. Ингэснээр текст илүү цэвэрхэн харагдана.
+TextTheme _tuneTextTheme(TextTheme t) {
+  TextStyle? tune(TextStyle? style, double spacing) =>
+      style?.copyWith(letterSpacing: spacing);
+  return t.copyWith(
+    displayLarge: tune(t.displayLarge, -1.2),
+    displayMedium: tune(t.displayMedium, -1),
+    displaySmall: tune(t.displaySmall, -.8),
+    headlineLarge: tune(t.headlineLarge, -.7),
+    headlineMedium: tune(t.headlineMedium, -.5),
+    headlineSmall: tune(t.headlineSmall, -.4),
+    titleLarge: tune(t.titleLarge, -.3),
+    titleMedium: tune(t.titleMedium, -.1),
+    titleSmall: tune(t.titleSmall, 0),
+    bodyLarge: tune(t.bodyLarge, 0),
+    bodyMedium: tune(t.bodyMedium, 0),
+    bodySmall: tune(t.bodySmall, .1),
+    labelLarge: tune(t.labelLarge, 0),
+    labelMedium: tune(t.labelMedium, .1),
+    labelSmall: tune(t.labelSmall, .2),
+  );
+}
+
+ThemeData buildTheme(AppThemeMode mode) {
   final p = paletteFor(mode);
   final brightness =
       mode == AppThemeMode.dark ? Brightness.dark : Brightness.light;
   final base = ThemeData(brightness: brightness, useMaterial3: true);
-  final TextTheme baseText =
-      googleFonts ? GoogleFonts.manropeTextTheme(base.textTheme) : base.textTheme;
+  final textTheme = _tuneTextTheme(base.textTheme).apply(
+    fontFamily: appFontFamily,
+    bodyColor: p.ink,
+    displayColor: p.ink,
+  );
 
   return ThemeData(
     useMaterial3: true,
+    fontFamily: appFontFamily,
     scaffoldBackgroundColor: p.canvas,
     colorScheme: ColorScheme.fromSeed(
       seedColor: p.accent,
       brightness: brightness,
       surface: p.page,
     ),
-    textTheme: baseText.apply(bodyColor: p.ink, displayColor: p.ink),
+    textTheme: textTheme,
     extensions: <ThemeExtension<dynamic>>[p],
     dividerColor: p.line,
+    iconTheme: IconThemeData(color: p.ink, size: 22),
     navigationBarTheme: NavigationBarThemeData(
       height: 72,
       backgroundColor: p.card,
       surfaceTintColor: Colors.transparent,
       indicatorColor: p.highlight,
+      iconTheme: WidgetStateProperty.resolveWith(
+        (states) => IconThemeData(
+          size: 24,
+          color: states.contains(WidgetState.selected) ? p.forest : p.muted,
+        ),
+      ),
+      labelTextStyle: WidgetStateProperty.resolveWith(
+        (states) => TextStyle(
+          fontFamily: appFontFamily,
+          fontSize: 11.5,
+          letterSpacing: 0,
+          fontWeight: states.contains(WidgetState.selected)
+              ? FontWeight.w700
+              : FontWeight.w500,
+          color: states.contains(WidgetState.selected) ? p.ink : p.muted,
+        ),
+      ),
     ),
     snackBarTheme: SnackBarThemeData(
       behavior: SnackBarBehavior.floating,
       backgroundColor: p.forest,
-      contentTextStyle: TextStyle(color: p.onForest, fontSize: 13),
+      contentTextStyle: TextStyle(
+        fontFamily: appFontFamily,
+        color: p.onForest,
+        fontSize: 13,
+        fontWeight: FontWeight.w500,
+      ),
     ),
   );
 }

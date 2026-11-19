@@ -115,7 +115,7 @@ class SettingTile extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                   ),
                   if (subtitle != null)
                     Padding(
@@ -131,7 +131,7 @@ class SettingTile extends StatelessWidget {
             trailing ??
                 (onTap == null
                     ? const SizedBox.shrink()
-                    : Icon(Icons.chevron_right_rounded, size: 20, color: p.muted)),
+                    : Icon(AppIcons.forward, size: 20, color: p.muted)),
           ],
         ),
       ),
@@ -167,7 +167,7 @@ class Avatar extends StatelessWidget {
         style: TextStyle(
           fontSize: size * .38,
           color: Colors.white,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -176,13 +176,14 @@ class Avatar extends StatelessWidget {
 
 class StatTile extends StatelessWidget {
   const StatTile({
-    required this.emoji,
+    required this.leading,
     required this.label,
     required this.value,
     super.key,
   });
 
-  final String emoji;
+  /// Зүүн талын дүрс ([IconBox] эсвэл [MoodFace]).
+  final Widget leading;
   final String label;
   final String value;
 
@@ -193,7 +194,7 @@ class StatTile extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 26)),
+          leading,
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -204,13 +205,44 @@ class StatTile extends StatelessWidget {
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                 ),
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Өнгөт дэвсгэр бүхий дөрвөлжин icon (карт, жагсаалтын эхэнд).
+/// [background] өгөхгүй бол [color]-ын цайвар өнгийг ашиглана.
+class IconBox extends StatelessWidget {
+  const IconBox({
+    required this.icon,
+    required this.color,
+    this.background,
+    this.size = 40,
+    super.key,
+  });
+
+  final IconData icon;
+  final Color color;
+  final Color? background;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: background ?? color.withAlpha(36),
+        borderRadius: BorderRadius.circular(size * .3),
+      ),
+      child: Icon(icon, size: size * .5, color: color),
     );
   }
 }
@@ -226,7 +258,7 @@ class NoticeCard extends StatelessWidget {
     super.key,
   });
 
-  final String icon;
+  final IconData icon;
   final String title;
   final String copy;
   final String time;
@@ -243,22 +275,13 @@ class NoticeCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: p.mint,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(icon, style: TextStyle(color: p.accent, fontSize: 19)),
-          ),
+          IconBox(icon: icon, color: p.accent, background: p.mint),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                Text(title, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 3),
                 Text(copy, style: TextStyle(fontSize: 12, height: 1.5, color: p.muted)),
                 const SizedBox(height: 4),
@@ -319,7 +342,7 @@ class ChoiceTile extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+                  Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
                   Text(subtitle, style: TextStyle(fontSize: 11, color: p.muted)),
                 ],
               ),
@@ -346,7 +369,7 @@ class ThemeChoice extends StatelessWidget {
   final AppThemeMode mode;
   final String title;
   final String subtitle;
-  final String symbol;
+  final IconData symbol;
   final bool selected;
   final VoidCallback onTap;
 
@@ -383,7 +406,7 @@ class ThemeChoice extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(symbol, style: TextStyle(fontSize: 18, color: preview.accent)),
+                    Icon(symbol, size: 20, color: preview.accent),
                     const SizedBox(height: 7),
                     for (final width in const [1.0, .72, .46])
                       FractionallySizedBox(
@@ -408,10 +431,10 @@ class ThemeChoice extends StatelessWidget {
                       title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                     ),
                   ),
-                  if (selected) Icon(Icons.check_rounded, size: 16, color: p.accent),
+                  if (selected) Icon(AppIcons.check, size: 16, color: p.accent),
                 ],
               ),
               Text(
@@ -460,11 +483,11 @@ class _FaqTileState extends State<FaqTile> {
                   Expanded(
                     child: Text(
                       widget.question,
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                   ),
                   Icon(
-                    open ? Icons.expand_less_rounded : Icons.expand_more_rounded,
+                    open ? AppIcons.expandLess : AppIcons.expandMore,
                     size: 22,
                     color: p.muted,
                   ),
@@ -503,7 +526,7 @@ class TagPill extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: TextStyle(fontSize: 11, color: p.muted, fontWeight: FontWeight.w700),
+        style: TextStyle(fontSize: 11, color: p.muted, fontWeight: FontWeight.w600),
       ),
     );
   }

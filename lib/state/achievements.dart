@@ -5,13 +5,11 @@ import '../models/models.dart';
 class AchievementStatus {
   const AchievementStatus({
     required this.id,
-    required this.emoji,
     required this.progress,
     required this.target,
   });
 
   final String id;
-  final String emoji;
   final int progress;
   final int target;
 
@@ -80,28 +78,27 @@ List<AchievementStatus> computeAchievements({
     tags.addAll(e.tags.where(moodTags.contains));
   }
 
-  AchievementStatus make(String id, String emoji, int progress, int target) {
+  AchievementStatus make(String id, int progress, int target) {
     return AchievementStatus(
       id: id,
-      emoji: emoji,
       progress: progress < target ? progress : target,
       target: target,
     );
   }
 
   return [
-    make('first', '🌱', total, 1),
-    make('streak3', '🌿', best, 3),
-    make('streak7', '🔥', best, 7),
-    make('streak14', '💪', best, 14),
-    make('streak30', '🏆', best, 30),
-    make('total10', '📖', total, 10),
-    make('total50', '📚', total, 50),
-    make('total100', '💯', total, 100),
-    make('notes10', '✍️', withNotes, 10),
-    make('moods5', '🌈', moods, 5),
-    make('tags6', '🏷️', tags.length, moodTags.length),
-    make('breath5', '🌬️', breathingSessions, 5),
-    make('challenge30', '🎯', challengeLogged, Challenge.length),
+    make('first', total, 1),
+    make('streak3', best, 3),
+    make('streak7', best, 7),
+    make('streak14', best, 14),
+    make('streak30', best, 30),
+    make('total10', total, 10),
+    make('total50', total, 50),
+    make('total100', total, 100),
+    make('notes10', withNotes, 10),
+    make('moods5', moods, 5),
+    make('tags6', tags.length, moodTags.length),
+    make('breath5', breathingSessions, 5),
+    make('challenge30', challengeLogged, Challenge.length),
   ];
 }

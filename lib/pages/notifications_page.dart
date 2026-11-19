@@ -16,18 +16,18 @@ void openNotifications(BuildContext context) {
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
 
-  static String _icon(String type) {
+  static IconData _icon(String type) {
     switch (type) {
       case 'weekly':
-        return '✦';
+        return AppIcons.chartLineUp;
       case 'reminder':
-        return '☺';
+        return AppIcons.bellRinging;
       case 'streak':
-        return '☾';
+        return AppIcons.flame;
       case 'badge':
-        return '★';
+        return AppIcons.medal;
       default:
-        return '☁';
+        return AppIcons.handWaving;
     }
   }
 
@@ -61,7 +61,7 @@ class NotificationsPage extends StatelessWidget {
               color: const Color(0x26D9534F),
               borderRadius: BorderRadius.circular(22),
             ),
-            child: const Icon(Icons.delete_outline_rounded, color: Color(0xFFD9534F)),
+            child: const Icon(AppIcons.trash, color: Color(0xFFD9534F)),
           ),
           child: NoticeCard(
             icon: _icon(n.type),
@@ -86,7 +86,7 @@ class NotificationsPage extends StatelessWidget {
           DetailHeader(title: s('notif.title'), eyebrow: s('notif.eyebrow')),
           if (all.isEmpty)
             EmptyState(
-              icon: Icons.notifications_none_rounded,
+              icon: AppIcons.bell,
               title: s('notif.emptyTitle'),
               message: s('notif.emptyBody'),
             )
@@ -109,10 +109,10 @@ class NotificationsPage extends StatelessWidget {
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 19,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                             ),
                           )
-                        : const Icon(Icons.done_all_rounded, color: Colors.white),
+                        : const Icon(AppIcons.checks, color: Colors.white),
                   ),
                   const SizedBox(width: 13),
                   Expanded(
@@ -123,7 +123,7 @@ class NotificationsPage extends StatelessWidget {
                           unread > 0 ? s('notif.new') : s('notif.allRead'),
                           style: const TextStyle(
                             fontSize: 14,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                         Text(
@@ -159,7 +159,7 @@ class NotificationsPage extends StatelessWidget {
               ),
               child: Text(
                 s('notif.markAll'),
-                style: const TextStyle(fontWeight: FontWeight.w700),
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
             const SizedBox(height: 6),
@@ -176,7 +176,7 @@ class NotificationsPage extends StatelessWidget {
               },
               child: Text(
                 s('notif.clear'),
-                style: TextStyle(color: p.muted, fontWeight: FontWeight.w700),
+                style: TextStyle(color: p.muted, fontWeight: FontWeight.w600),
               ),
             ),
           ],

@@ -36,8 +36,8 @@ class Eyebrow extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           color: color ?? context.pal.muted,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 1.1,
+          fontWeight: FontWeight.w700,
+          letterSpacing: .9,
         ),
       ),
     );
@@ -77,7 +77,7 @@ class PageHeader extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 26,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     letterSpacing: -.7,
                   ),
                 ),
@@ -88,7 +88,7 @@ class PageHeader extends StatelessWidget {
           Stack(
             children: [
               RoundButton(
-                icon: Icons.notifications_none_rounded,
+                icon: AppIcons.bell,
                 onTap: onNotifications,
                 tooltip: context.s('notif.title'),
               ),
@@ -128,7 +128,7 @@ class DetailHeader extends StatelessWidget {
       child: Row(
         children: [
           RoundButton(
-            icon: Icons.chevron_left_rounded,
+            icon: AppIcons.back,
             onTap: () => Navigator.of(context).maybePop(),
             tooltip: context.s('common.back'),
           ),
@@ -142,7 +142,11 @@ class DetailHeader extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -.5,
+                  ),
                 ),
               ],
             ),
@@ -183,7 +187,11 @@ class SectionHeading extends StatelessWidget {
                 if (eyebrow != null) Eyebrow(eyebrow!),
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -.2,
+                  ),
                 ),
               ],
             ),
@@ -199,7 +207,7 @@ class SectionHeading extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     color: p.accent,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -224,8 +232,8 @@ class GroupLabel extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           color: context.pal.muted,
-          fontWeight: FontWeight.w800,
-          letterSpacing: 1,
+          fontWeight: FontWeight.w700,
+          letterSpacing: .9,
         ),
       ),
     );
@@ -265,7 +273,7 @@ class EmptyState extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 6),
           Text(

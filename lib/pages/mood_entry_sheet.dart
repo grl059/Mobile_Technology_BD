@@ -151,14 +151,14 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                             _existing ? s('sheet.editTitle') : s('sheet.title'),
                             style: const TextStyle(
                               fontSize: 21,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
                       ),
                     ),
                     RoundButton(
-                      icon: Icons.close_rounded,
+                      icon: AppIcons.close,
                       size: 40,
                       onTap: () => Navigator.of(context).pop(),
                       tooltip: s('common.close'),
@@ -168,7 +168,7 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                 const SizedBox(height: 20),
                 Text(
                   s('sheet.question'),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 12),
                 Row(
@@ -191,7 +191,7 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                   children: [
                     Text(
                       s('sheet.note'),
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       s('sheet.optional'),
@@ -233,7 +233,7 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                 const SizedBox(height: 16),
                 PrimaryButton(
                   key: const Key('mood_save'),
-                  icon: Icons.check_rounded,
+                  icon: AppIcons.check,
                   label: _existing ? s('sheet.update') : s('sheet.save'),
                   onTap: _selected == null ? null : _save,
                 ),
@@ -243,7 +243,7 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                     child: TextButton.icon(
                       onPressed: _delete,
                       icon: const Icon(
-                        Icons.delete_outline_rounded,
+                        AppIcons.trash,
                         size: 18,
                         color: Color(0xFFD9534F),
                       ),
@@ -251,7 +251,7 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                         s('common.delete'),
                         style: const TextStyle(
                           color: Color(0xFFD9534F),
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -297,15 +297,19 @@ class _MoodOption extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(mood.emoji, style: const TextStyle(fontSize: 26)),
-            const SizedBox(height: 2),
+            AnimatedScale(
+              scale: selected ? 1.08 : 1,
+              duration: const Duration(milliseconds: 180),
+              child: MoodFace(mood, size: 32),
+            ),
+            const SizedBox(height: 6),
             FittedBox(
               fit: BoxFit.scaleDown,
               child: Text(
                 label,
                 style: TextStyle(
                   fontSize: 10,
-                  fontWeight: selected ? FontWeight.w800 : FontWeight.w500,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                 ),
               ),
             ),

@@ -8,12 +8,9 @@ import 'state/app_state.dart';
 
 /// Аппын үндсэн widget: тема, хэл, нэвтрэлтийн төлвөөс хамаарч хуудсаа сонгоно.
 class MindfulApp extends StatelessWidget {
-  const MindfulApp({required this.state, this.useGoogleFonts = true, super.key});
+  const MindfulApp({required this.state, super.key});
 
   final AppState state;
-
-  /// Тестэд сүлжээнээс фонт татахгүй байхын тулд false болгоно.
-  final bool useGoogleFonts;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +30,8 @@ class MindfulApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Mindful',
-            theme: buildTheme(lightMode, googleFonts: useGoogleFonts),
-            darkTheme: buildTheme(AppThemeMode.dark, googleFonts: useGoogleFonts),
+            theme: buildTheme(lightMode),
+            darkTheme: buildTheme(AppThemeMode.dark),
             themeMode: materialMode,
             builder: (context, child) {
               // Өргөн дэлгэц (веб, таблет) дээр апп-ыг төвд, гар утасны өргөнтэй харуулна.

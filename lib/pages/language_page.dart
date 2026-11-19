@@ -28,14 +28,7 @@ class LanguagePage extends StatelessWidget {
                 color: p.highlight,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: Text(
-                '文',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800,
-                  color: p.accent,
-                ),
-              ),
+              child: Icon(AppIcons.translate, size: 30, color: p.accent),
             ),
           ),
           const SizedBox(height: 12),

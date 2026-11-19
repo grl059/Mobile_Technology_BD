@@ -106,7 +106,7 @@ class ProfileField extends StatelessWidget {
       style: const TextStyle(fontSize: 14),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontSize: 13, color: p.muted, fontWeight: FontWeight.w700),
+        labelStyle: TextStyle(fontSize: 13, color: p.muted, fontWeight: FontWeight.w600),
         errorStyle: const TextStyle(fontSize: 11),
         suffixIcon: suffix,
         border: InputBorder.none,

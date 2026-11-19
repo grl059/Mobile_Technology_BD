@@ -63,7 +63,7 @@ class SettingsPage extends StatelessWidget {
                       user?.name ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     Text(
                       user?.email ?? '',
@@ -75,7 +75,7 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               RoundButton(
-                icon: Icons.edit_outlined,
+                icon: AppIcons.edit,
                 size: 40,
                 tooltip: s('profile.title'),
                 onTap: () => pushPage<void>(context, const ProfilePage()),
@@ -87,7 +87,7 @@ class SettingsPage extends StatelessWidget {
         SettingsCard(
           children: [
             SettingTile(
-              icon: Icons.notifications_none_rounded,
+              icon: AppIcons.bell,
               iconColor: const Color(0xFFB87955),
               iconBackground: const Color(0xFFFAE7DB),
               title: s('settings.notifications'),
@@ -99,7 +99,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () => pushPage<void>(context, const ReminderPage()),
             ),
             SettingTile(
-              icon: Icons.contrast_rounded,
+              icon: AppIcons.palette,
               iconColor: const Color(0xFF77649A),
               iconBackground: const Color(0xFFEAE4F3),
               title: s('settings.theme'),
@@ -108,7 +108,7 @@ class SettingsPage extends StatelessWidget {
             ),
             SettingTile(
               key: const Key('settings_companion'),
-              icon: Icons.emoji_emotions_outlined,
+              icon: AppIcons.smiley,
               iconColor: const Color(0xFFB8892F),
               iconBackground: const Color(0xFFFBEFD0),
               title: s('settings.companion'),
@@ -117,7 +117,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () => showCompanionSheet(context),
             ),
             SettingTile(
-              icon: Icons.translate_rounded,
+              icon: AppIcons.translate,
               iconColor: const Color(0xFF4D806C),
               iconBackground: const Color(0xFFDFEFE8),
               title: s('settings.language'),
@@ -130,14 +130,14 @@ class SettingsPage extends StatelessWidget {
         SettingsCard(
           children: [
             SettingTile(
-              icon: Icons.question_mark_rounded,
+              icon: AppIcons.question,
               iconColor: const Color(0xFF587C98),
               iconBackground: const Color(0xFFE1EBF3),
               title: s('settings.help'),
               onTap: () => pushPage<void>(context, const HelpPage()),
             ),
             SettingTile(
-              icon: Icons.info_outline_rounded,
+              icon: AppIcons.info,
               iconColor: const Color(0xFF967B4F),
               iconBackground: const Color(0xFFF2EAD9),
               title: s('settings.about'),
@@ -150,7 +150,7 @@ class SettingsPage extends StatelessWidget {
         SettingsCard(
           children: [
             SettingTile(
-              icon: Icons.delete_sweep_outlined,
+              icon: AppIcons.broom,
               iconColor: const Color(0xFFB5604F),
               iconBackground: const Color(0xFFF7E1DC),
               title: s('settings.clearData'),
@@ -170,7 +170,7 @@ class SettingsPage extends StatelessWidget {
             ),
             SettingTile(
               key: const Key('settings_logout'),
-              icon: Icons.logout_rounded,
+              icon: AppIcons.signOut,
               iconColor: const Color(0xFF5E6E78),
               iconBackground: const Color(0xFFE7ECEF),
               title: s('settings.logout'),

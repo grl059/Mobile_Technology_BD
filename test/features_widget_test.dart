@@ -31,7 +31,7 @@ Future<AppState> startRegistered(WidgetTester tester) async {
 
   SharedPreferences.setMockInitialValues(<String, Object>{});
   final state = (await tester.runAsync(AppState.load))!;
-  await tester.pumpWidget(MindfulApp(state: state, useGoogleFonts: false));
+  await tester.pumpWidget(MindfulApp(state: state));
   await tester.pumpAndSettle();
 
   await tapVisible(tester, find.byKey(const Key('tab_register')));

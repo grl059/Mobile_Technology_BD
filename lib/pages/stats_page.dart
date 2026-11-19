@@ -63,7 +63,7 @@ class _StatsPageState extends State<StatsPage> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
         title: Text(
           s('tips.title'),
-          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -75,7 +75,11 @@ class _StatsPageState extends State<StatsPage> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('✦  ', style: TextStyle(color: p.accent, fontSize: 14)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3),
+                      child: Icon(AppIcons.sparkle, size: 14, color: p.accent),
+                    ),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         s('tips.$level.$n'),
@@ -92,7 +96,7 @@ class _StatsPageState extends State<StatsPage> {
             onPressed: () => Navigator.of(ctx).pop(),
             child: Text(
               s('common.close'),
-              style: TextStyle(color: p.accent, fontWeight: FontWeight.w800),
+              style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -148,7 +152,7 @@ class _StatsPageState extends State<StatsPage> {
                           s('stats.${r.name}'),
                           style: TextStyle(
                             fontSize: 12.5,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             color: _range == r ? p.ink : p.muted,
                           ),
                         ),
@@ -173,14 +177,25 @@ class _StatsPageState extends State<StatsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Eyebrow(s('stats.avg')),
-                        Text(
-                          avgMood == null
-                              ? '—'
-                              : '${s(avgMood.labelKey)} ${avgMood.emoji}',
-                          style: const TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w800,
-                          ),
+                        Row(
+                          children: [
+                            if (avgMood != null) ...[
+                              MoodFace(avgMood, size: 30),
+                              const SizedBox(width: 10),
+                            ],
+                            Flexible(
+                              child: Text(
+                                avgMood == null ? '—' : s(avgMood.labelKey),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700,
+                                  letterSpacing: -.5,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -194,15 +209,28 @@ class _StatsPageState extends State<StatsPage> {
                             : const Color(0x26D9534F),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text(
-                        change >= 0 ? '↗ $change%' : '↘ ${change.abs()}%',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: change >= 0
-                              ? const Color(0xFF4D8D68)
-                              : const Color(0xFFD9534F),
-                          fontWeight: FontWeight.w800,
-                        ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            change >= 0 ? AppIcons.trendUp : AppIcons.trendDown,
+                            size: 14,
+                            color: change >= 0
+                                ? const Color(0xFF4D8D68)
+                                : const Color(0xFFD9534F),
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            '${change.abs()}%',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: change >= 0
+                                  ? const Color(0xFF4D8D68)
+                                  : const Color(0xFFD9534F),
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                 ],
@@ -261,10 +289,7 @@ class _StatsPageState extends State<StatsPage> {
                   color: Colors.white.withAlpha(26),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
-                  '✦',
-                  style: TextStyle(color: Color(0xFFE9C986), fontSize: 20),
-                ),
+                child: const Icon(AppIcons.sparkle, size: 20, color: Color(0xFFE9C986)),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -276,7 +301,7 @@ class _StatsPageState extends State<StatsPage> {
                       s(_insightTitleKey(avg)),
                       style: const TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         color: Colors.white,
                       ),
                     ),
@@ -296,13 +321,24 @@ class _StatsPageState extends State<StatsPage> {
                         onTap: () => _showTips(avg),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Text(
-                            '${s('stats.tips')}  ›',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color(0xFFE7D4A7),
-                              fontWeight: FontWeight.w700,
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                s('stats.tips'),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFFE7D4A7),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(width: 4),
+                              const Icon(
+                                AppIcons.forward,
+                                size: 13,
+                                color: Color(0xFFE7D4A7),
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -318,7 +354,9 @@ class _StatsPageState extends State<StatsPage> {
           children: [
             Expanded(
               child: StatTile(
-                emoji: topMood?.emoji ?? '—',
+                leading: topMood == null
+                    ? IconBox(icon: AppIcons.smiley, color: p.muted, background: p.soft)
+                    : MoodFace(topMood, size: 40),
                 label: s('stats.most'),
                 value: topMood == null ? '—' : s(topMood.labelKey),
               ),
@@ -326,7 +364,7 @@ class _StatsPageState extends State<StatsPage> {
             const SizedBox(width: 10),
             Expanded(
               child: StatTile(
-                emoji: '🔥',
+                leading: const IconBox(icon: AppIcons.flame, color: Color(0xFFE98A45)),
                 label: s('stats.streak'),
                 value: s.f('stats.daysValue', {'n': '${app.streak}'}),
               ),
@@ -365,8 +403,8 @@ class _Bar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Text(mood.emoji, style: const TextStyle(fontSize: 12)),
-          const SizedBox(height: 3),
+          MoodFace(mood, size: 14),
+          const SizedBox(height: 4),
           Expanded(
             child: Container(
               width: width,

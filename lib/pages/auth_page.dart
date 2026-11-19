@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../core/core.dart';
+import '../models/models.dart';
 import '../state/app_scope.dart';
 import '../state/app_state.dart';
 import '../widgets/widgets.dart';
@@ -114,7 +115,7 @@ class _AuthPageState extends State<AuthPage> {
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 26,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           letterSpacing: -.6,
                         ),
                       ),
@@ -160,7 +161,7 @@ class _AuthPageState extends State<AuthPage> {
                                 controller: _name,
                                 label: s('auth.name'),
                                 hint: s('auth.nameHint'),
-                                icon: Icons.person_outline_rounded,
+                                icon: AppIcons.user,
                                 textInputAction: TextInputAction.next,
                                 validator: (v) => (v == null || v.trim().isEmpty)
                                     ? s('err.nameRequired')
@@ -173,7 +174,7 @@ class _AuthPageState extends State<AuthPage> {
                               controller: _email,
                               label: s('auth.email'),
                               hint: 'name@email.com',
-                              icon: Icons.mail_outline_rounded,
+                              icon: AppIcons.mail,
                               keyboardType: TextInputType.emailAddress,
                               textInputAction: TextInputAction.next,
                               validator: (v) =>
@@ -187,7 +188,7 @@ class _AuthPageState extends State<AuthPage> {
                               controller: _password,
                               label: s('auth.password'),
                               hint: '••••••••',
-                              icon: Icons.lock_outline_rounded,
+                              icon: AppIcons.lock,
                               obscureText: _obscure,
                               textInputAction: TextInputAction.done,
                               onSubmitted: (_) => _submit(),
@@ -204,8 +205,8 @@ class _AuthPageState extends State<AuthPage> {
                                 onPressed: () => setState(() => _obscure = !_obscure),
                                 icon: Icon(
                                   _obscure
-                                      ? Icons.visibility_off_outlined
-                                      : Icons.visibility_outlined,
+                                      ? AppIcons.eyeSlash
+                                      : AppIcons.eye,
                                   size: 20,
                                 ),
                               ),
@@ -221,7 +222,7 @@ class _AuthPageState extends State<AuthPage> {
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: p.accent,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
@@ -246,7 +247,7 @@ class _AuthPageState extends State<AuthPage> {
                           child: Row(
                             children: [
                               const Icon(
-                                Icons.error_outline_rounded,
+                                AppIcons.warning,
                                 size: 18,
                                 color: Color(0xFFD9534F),
                               ),
@@ -269,8 +270,8 @@ class _AuthPageState extends State<AuthPage> {
                       PrimaryButton(
                         key: const Key('auth_submit'),
                         icon: _isLogin
-                            ? Icons.arrow_forward_rounded
-                            : Icons.person_add_alt_1_rounded,
+                            ? AppIcons.arrowRight
+                            : AppIcons.userPlus,
                         label: _isLogin ? s('auth.login') : s('auth.createBtn'),
                         onTap: (_isLogin || _accepted) ? _submit : null,
                       ),
@@ -301,15 +302,15 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                         icon: Icon(
                           _isLogin
-                              ? Icons.person_add_alt_1_outlined
-                              : Icons.login_rounded,
+                              ? AppIcons.userPlus
+                              : AppIcons.signIn,
                           size: 18,
                         ),
                         label: Text(
                           _isLogin ? s('auth.newAccount') : s('auth.toLogin'),
                           style: const TextStyle(
                             fontSize: 13,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -354,7 +355,7 @@ class _LanguageSwitch extends StatelessWidget {
                   option.$2,
                   style: TextStyle(
                     fontSize: 11,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     color: current == option.$1 ? p.onForest : p.muted,
                   ),
                 ),
@@ -392,10 +393,7 @@ class _Brand extends StatelessWidget {
               ),
             ],
           ),
-          child: Text(
-            'M',
-            style: TextStyle(color: p.onForest, fontSize: 25, fontFamily: 'serif'),
-          ),
+          child: Icon(AppIcons.lotus, size: 28, color: p.onForest),
         ),
         const SizedBox(width: 12),
         Column(
@@ -403,7 +401,7 @@ class _Brand extends StatelessWidget {
           children: [
             const Text(
               'Mindful',
-              style: TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: 21, fontWeight: FontWeight.w700),
             ),
             Text(tagline, style: TextStyle(fontSize: 11, color: p.muted)),
           ],
@@ -461,12 +459,21 @@ class _HeroBanner extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('☁', style: TextStyle(fontSize: 32)),
-                const SizedBox(height: 5),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (final mood in MoodType.values)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: MoodFace(mood, size: 26),
+                      ),
+                  ],
+                ),
+                const SizedBox(height: 10),
                 Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -513,7 +520,7 @@ class _AuthTab extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 color: active ? p.ink : p.muted,
-                fontWeight: FontWeight.w800,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ),
@@ -555,7 +562,7 @@ class _TermsRow extends StatelessWidget {
                 border: Border.all(color: accepted ? p.accent : p.muted.withAlpha(120)),
               ),
               child: accepted
-                  ? const Icon(Icons.check_rounded, size: 16, color: Colors.white)
+                  ? const Icon(AppIcons.check, size: 16, color: Colors.white)
                   : null,
             ),
             const SizedBox(width: 10),
@@ -621,7 +628,7 @@ class _ResetPasswordDialogState extends State<_ResetPasswordDialog> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       title: Text(
         s('auth.resetTitle'),
-        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
       ),
       content: SingleChildScrollView(
         child: Form(
@@ -639,7 +646,7 @@ class _ResetPasswordDialogState extends State<_ResetPasswordDialog> {
                 controller: _email,
                 label: s('auth.email'),
                 hint: 'name@email.com',
-                icon: Icons.mail_outline_rounded,
+                icon: AppIcons.mail,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 validator: (v) => (v == null || !AppState.isValidEmail(v))
@@ -651,7 +658,7 @@ class _ResetPasswordDialogState extends State<_ResetPasswordDialog> {
                 controller: _password,
                 label: s('auth.newPassword'),
                 hint: '••••••••',
-                icon: Icons.lock_outline_rounded,
+                icon: AppIcons.lock,
                 obscureText: true,
                 textInputAction: TextInputAction.done,
                 onSubmitted: (_) => _save(),
@@ -683,7 +690,7 @@ class _ResetPasswordDialogState extends State<_ResetPasswordDialog> {
           onPressed: _save,
           child: Text(
             s('common.save'),
-            style: TextStyle(color: p.accent, fontWeight: FontWeight.w800),
+            style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
           ),
         ),
       ],

@@ -65,7 +65,7 @@ class _ChallengeCard extends StatelessWidget {
 
     final header = Row(
       children: [
-        const Text('🎯', style: TextStyle(fontSize: 30)),
+        IconBox(icon: AppIcons.target, color: p.forest, background: p.card, size: 46),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
@@ -73,7 +73,7 @@ class _ChallengeCard extends StatelessWidget {
             children: [
               Text(
                 s('chal.title'),
-                style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w800),
+                style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
               ),
               if (status == ChallengeStatus.active)
                 Text(
@@ -98,7 +98,7 @@ class _ChallengeCard extends StatelessWidget {
         ..add(
           PrimaryButton(
             key: const Key('challenge_start'),
-            icon: Icons.flag_rounded,
+            icon: AppIcons.flag,
             label: s('chal.start'),
             onTap: () {
               app.startChallenge();
@@ -125,7 +125,7 @@ class _ChallengeCard extends StatelessWidget {
             s.f('chal.logged', {'n': '$logged'}),
             style: TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               color: p.mintInk,
             ),
           ),
@@ -165,7 +165,7 @@ class _ChallengeCard extends StatelessWidget {
               },
               child: Text(
                 s('chal.stop'),
-                style: TextStyle(color: p.mintInk, fontWeight: FontWeight.w700),
+                style: TextStyle(color: p.mintInk, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -174,7 +174,7 @@ class _ChallengeCard extends StatelessWidget {
         children.add(
           PrimaryButton(
             key: const Key('challenge_restart'),
-            icon: Icons.refresh_rounded,
+            icon: AppIcons.refresh,
             label: s('chal.restart'),
             onTap: () {
               app.startChallenge();
@@ -263,7 +263,7 @@ class _ChallengeDots extends StatelessWidget {
           border: Border.all(color: border, width: isToday ? 2 : 1),
         ),
         child: done
-            ? Icon(Icons.check_rounded, size: size * .6, color: p.onForest)
+            ? Icon(AppIcons.check, size: size * .6, color: p.onForest)
             : Text(
                 '$number',
                 style: TextStyle(fontSize: size * .38, color: p.mintInk),
@@ -292,11 +292,8 @@ class _BadgeTile extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Opacity(
-            opacity: unlocked ? 1 : .35,
-            child: Text(status.emoji, style: const TextStyle(fontSize: 34)),
-          ),
-          const SizedBox(height: 6),
+          _BadgeMedal(id: status.id, unlocked: unlocked, size: 50),
+          const SizedBox(height: 8),
           Text(
             s(status.titleKey),
             maxLines: 2,
@@ -304,13 +301,13 @@ class _BadgeTile extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 11.5,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w600,
               height: 1.25,
             ),
           ),
           const SizedBox(height: 8),
           if (unlocked)
-            Icon(Icons.check_circle_rounded, size: 16, color: p.accent)
+            Icon(AppIcons.checkCircleFill, size: 16, color: p.accent)
           else ...[
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
@@ -357,15 +354,12 @@ class _BadgeTile extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Opacity(
-              opacity: unlocked ? 1 : .4,
-              child: Text(status.emoji, style: const TextStyle(fontSize: 56)),
-            ),
-            const SizedBox(height: 12),
+            _BadgeMedal(id: status.id, unlocked: unlocked, size: 76),
+            const SizedBox(height: 14),
             Text(
               s(status.titleKey),
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 6),
             Text(
@@ -381,7 +375,7 @@ class _BadgeTile extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   color: p.accent,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ],
@@ -392,10 +386,60 @@ class _BadgeTile extends StatelessWidget {
             onPressed: () => Navigator.of(ctx).pop(),
             child: Text(
               s('common.close'),
-              style: TextStyle(color: p.accent, fontWeight: FontWeight.w800),
+              style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+/// Тэмдгийн дугуй медаль: нээгдсэн бол өнгөтэй, түгжээтэй бол саарал.
+class _BadgeMedal extends StatelessWidget {
+  const _BadgeMedal({required this.id, required this.unlocked, required this.size});
+
+  final String id;
+  final bool unlocked;
+  final double size;
+
+  /// Тэмдэг бүрийн icon ба өнгө (id нь `achievementIds`-тай ижил).
+  static const Map<String, (IconData, Color)> _visuals = {
+    'first': (AppIcons.plant, Color(0xFF5BA672)),
+    'streak3': (AppIcons.leaf, Color(0xFF2F9D8F)),
+    'streak7': (AppIcons.flame, Color(0xFFEB8A45)),
+    'streak14': (AppIcons.barbell, Color(0xFFC2566F)),
+    'streak30': (AppIcons.trophy, Color(0xFFDDA530)),
+    'total10': (AppIcons.bookOpen, Color(0xFF5C8FD6)),
+    'total50': (AppIcons.books, Color(0xFF6E6FCF)),
+    'total100': (AppIcons.crown, Color(0xFF9B67C9)),
+    'notes10': (AppIcons.notePencil, Color(0xFFB9894E)),
+    'moods5': (AppIcons.rainbow, Color(0xFFE0709A)),
+    'tags6': (AppIcons.tag, Color(0xFF8A9A3C)),
+    'breath5': (AppIcons.wind, Color(0xFF4AA6C4)),
+    'challenge30': (AppIcons.target, Color(0xFFD9604A)),
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final p = context.pal;
+    final (icon, color) = _visuals[id] ?? (AppIcons.medal, p.accent);
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: unlocked ? color.withAlpha(40) : p.soft,
+        border: Border.all(
+          color: unlocked ? color.withAlpha(90) : p.line,
+          width: 1.5,
+        ),
+      ),
+      child: Icon(
+        icon,
+        size: size * .48,
+        color: unlocked ? color : p.muted.withAlpha(140),
       ),
     );
   }

@@ -20,7 +20,7 @@ Future<bool> confirmDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
       title: Text(
         title,
-        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+        style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
       ),
       content: Text(
         message,
@@ -37,7 +37,7 @@ Future<bool> confirmDialog(
             confirmLabel,
             style: TextStyle(
               color: danger ? const Color(0xFFD9534F) : p.accent,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),

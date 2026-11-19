@@ -23,7 +23,7 @@ void main() {
     SharedPreferences.setMockInitialValues(<String, Object>{});
     final state = (await tester.runAsync(AppState.load))!;
 
-    await tester.pumpWidget(MindfulApp(state: state, useGoogleFonts: false));
+    await tester.pumpWidget(MindfulApp(state: state));
     await tester.pumpAndSettle();
 
     // 1. Нэвтрэх хуудас харагдана

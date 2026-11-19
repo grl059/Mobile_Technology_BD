@@ -96,7 +96,7 @@ class PrimaryButton extends StatelessWidget {
     );
     final text = Text(
       label,
-      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
     );
     return SizedBox(
       width: double.infinity,

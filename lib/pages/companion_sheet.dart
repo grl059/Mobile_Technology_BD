@@ -84,10 +84,10 @@ class _CompanionSheetState extends State<CompanionSheet> {
                   children: [
                     Text(
                       s('comp.title'),
-                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w800),
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                     ),
                     RoundButton(
-                      icon: Icons.close_rounded,
+                      icon: AppIcons.close,
                       size: 40,
                       onTap: () => Navigator.of(context).pop(),
                       tooltip: s('common.close'),
@@ -120,7 +120,7 @@ class _CompanionSheetState extends State<CompanionSheet> {
                           ),
                           child: Text(
                             s.f('comp.hello', {'name': name}),
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -160,7 +160,7 @@ class _CompanionSheetState extends State<CompanionSheet> {
                 const SizedBox(height: 20),
                 Text(
                   s('comp.sizeQ'),
-                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -192,7 +192,7 @@ class _CompanionSheetState extends State<CompanionSheet> {
                                 s('comp.${size.name}'),
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w800,
+                                  fontWeight: FontWeight.w700,
                                   color: _draft.size == size ? p.ink : p.muted,
                                 ),
                               ),
@@ -263,7 +263,7 @@ class _KindTile extends StatelessWidget {
                 label,
                 style: TextStyle(
                   fontSize: 11,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: selected ? const Color(0xFFD9534F) : p.ink,
                 ),
               ),

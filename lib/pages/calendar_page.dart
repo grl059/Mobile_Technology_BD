@@ -83,15 +83,15 @@ class _CalendarPageState extends State<CalendarPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   MiniButton(
-                    icon: Icons.chevron_left_rounded,
+                    icon: AppIcons.back,
                     onTap: () => _shiftMonth(-1),
                   ),
                   Text(
                     s.monthTitle(_month.year, _month.month),
-                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+                    style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                   ),
                   MiniButton(
-                    icon: Icons.chevron_right_rounded,
+                    icon: AppIcons.forward,
                     onTap: isCurrentMonth ? null : () => _shiftMonth(1),
                   ),
                 ],
@@ -107,7 +107,7 @@ class _CalendarPageState extends State<CalendarPage> {
                           style: TextStyle(
                             fontSize: 11,
                             color: p.muted,
-                            fontWeight: FontWeight.w800,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
@@ -213,8 +213,10 @@ class _DayCell extends StatelessWidget {
                   color: isFuture ? p.muted.withAlpha(110) : p.ink,
                 ),
               ),
-              if (entry != null)
-                Text(entry!.mood.emoji, style: const TextStyle(fontSize: 18)),
+              if (entry != null) ...[
+                const SizedBox(height: 3),
+                MoodFace(entry!.mood, size: 20),
+              ],
             ],
           ),
         ),
@@ -243,13 +245,14 @@ class _SummaryRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 13),
       child: Row(
         children: [
-          SizedBox(width: 40, child: Text(mood.emoji, style: const TextStyle(fontSize: 25))),
+          MoodFace(mood, size: 28),
+          const SizedBox(width: 12),
           SizedBox(
             width: 90,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
+                Text(label, style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
                 Text(days, style: TextStyle(fontSize: 11, color: p.muted)),
               ],
             ),
@@ -286,7 +289,7 @@ class _EntryTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(entry.mood.emoji, style: const TextStyle(fontSize: 28)),
+          MoodFace(entry.mood, size: 36),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -294,12 +297,12 @@ class _EntryTile extends StatelessWidget {
               children: [
                 Text(
                   '${s.shortDate(entry.date)} • ${s.weekdayShort(entry.date.weekday)}',
-                  style: TextStyle(fontSize: 11, color: p.muted, fontWeight: FontWeight.w700),
+                  style: TextStyle(fontSize: 11, color: p.muted, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   s(entry.mood.labelKey),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
                 if (entry.note.isNotEmpty) ...[
                   const SizedBox(height: 4),

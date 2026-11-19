@@ -13,7 +13,7 @@ class ThemePage extends StatelessWidget {
     final s = context.s;
     final p = context.pal;
 
-    Widget choice(AppThemeMode mode, String symbol) {
+    Widget choice(AppThemeMode mode, IconData symbol) {
       return ThemeChoice(
         mode: mode,
         title: s('theme.${mode.name}'),
@@ -37,11 +37,11 @@ class ThemePage extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              choice(AppThemeMode.light, '☀'),
+              choice(AppThemeMode.light, AppIcons.sun),
               const SizedBox(width: 8),
-              choice(AppThemeMode.dark, '☾'),
+              choice(AppThemeMode.dark, AppIcons.moon),
               const SizedBox(width: 8),
-              choice(AppThemeMode.nature, '❧'),
+              choice(AppThemeMode.nature, AppIcons.leaf),
             ],
           ),
           GroupLabel(s('theme.colorGroup')),

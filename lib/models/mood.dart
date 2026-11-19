@@ -6,21 +6,6 @@ import '../core/dates.dart';
 enum MoodType { joyful, happy, calm, sad, angry }
 
 extension MoodTypeX on MoodType {
-  String get emoji {
-    switch (this) {
-      case MoodType.joyful:
-        return '😄';
-      case MoodType.happy:
-        return '😊';
-      case MoodType.calm:
-        return '😌';
-      case MoodType.sad:
-        return '😔';
-      case MoodType.angry:
-        return '😠';
-    }
-  }
-
   /// Статистикт ашиглагдах оноо (1-5).
   int get score {
     switch (this) {

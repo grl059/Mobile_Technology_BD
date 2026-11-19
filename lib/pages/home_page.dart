@@ -11,6 +11,9 @@ import 'notifications_page.dart';
 
 const int _quoteCount = 7;
 
+/// Дарааллын (streak) галын өнгө.
+const Color _flameColor = Color(0xFFE98A45);
+
 /// Нүүр хуудас: өнөөдрийн мэдрэмж, долоо хоногийн тойм, өдрийн сануулга.
 class HomePage extends StatelessWidget {
   const HomePage({required this.onSeeAll, super.key});
@@ -58,7 +61,7 @@ class HomePage extends StatelessWidget {
                   s('home.question'),
                   style: const TextStyle(
                     fontSize: 28,
-                    fontWeight: FontWeight.w800,
+                    fontWeight: FontWeight.w700,
                     height: 1.12,
                     letterSpacing: -1,
                   ),
@@ -71,14 +74,14 @@ class HomePage extends StatelessWidget {
               ] else ...[
                 Row(
                   children: [
-                    Text(todayEntry.mood.emoji, style: const TextStyle(fontSize: 40)),
-                    const SizedBox(width: 12),
+                    MoodFace(todayEntry.mood, size: 46),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: Text(
                         s.f('home.todayMood', {'mood': s(todayEntry.mood.labelKey)}),
                         style: const TextStyle(
                           fontSize: 24,
-                          fontWeight: FontWeight.w800,
+                          fontWeight: FontWeight.w700,
                           height: 1.15,
                           letterSpacing: -.6,
                         ),
@@ -94,13 +97,21 @@ class HomePage extends StatelessWidget {
               ],
               if (streak > 0) ...[
                 const SizedBox(height: 12),
-                Text(
-                  '🔥 ${s.f('home.streak', {'n': '$streak'})}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: p.mintInk,
-                  ),
+                Row(
+                  children: [
+                    const Icon(AppIcons.flame, size: 15, color: _flameColor),
+                    const SizedBox(width: 5),
+                    Expanded(
+                      child: Text(
+                        s.f('home.streak', {'n': '$streak'}),
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: p.mintInk,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
               const SizedBox(height: 20),
@@ -116,10 +127,13 @@ class HomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                icon: Icon(todayEntry == null ? Icons.add_rounded : Icons.edit_rounded),
+                icon: Icon(
+                  todayEntry == null ? AppIcons.plus : AppIcons.edit,
+                  size: 19,
+                ),
                 label: Text(
                   todayEntry == null ? s('home.add') : s('home.edit'),
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
             ],
@@ -150,7 +164,8 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: _QuickCard(
                 key: const Key('home_achievements'),
-                emoji: '🏅',
+                icon: AppIcons.medal,
+                color: const Color(0xFFD39B2C),
                 title: s('home.achievements'),
                 subtitle: s.f('home.achievementsSub', {
                   'n': '${app.unlockedCount}',
@@ -163,7 +178,8 @@ class HomePage extends StatelessWidget {
             Expanded(
               child: _QuickCard(
                 key: const Key('home_breathing'),
-                emoji: '🌿',
+                icon: AppIcons.wind,
+                color: p.accent,
                 title: s('home.breathing'),
                 subtitle: s('home.breathingSub'),
                 onTap: () => pushPage<void>(context, const BreathingPage()),
@@ -205,16 +221,11 @@ class HomePage extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                '“',
-                style: TextStyle(
-                  fontSize: 38,
-                  color: Color(0xFFBD8F69),
-                  height: .9,
-                  fontFamily: 'serif',
-                ),
+              const Padding(
+                padding: EdgeInsets.only(top: 2),
+                child: Icon(AppIcons.quotes, size: 24, color: Color(0xFFBD8F69)),
               ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +240,7 @@ class HomePage extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 10,
                         color: Color(0xFFA77B5A),
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                         letterSpacing: .6,
                       ),
                     ),
@@ -301,7 +312,7 @@ class _CompanionCard extends StatelessWidget {
                 Eyebrow(s('comp.my')),
                 Text(
                   s(settings.nameKey),
-                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
                 Container(
@@ -322,7 +333,7 @@ class _CompanionCard extends StatelessWidget {
                       onPressed: () => pushPage<void>(context, const BreathingPage()),
                       child: Text(
                         s('breath.suggestAction'),
-                        style: TextStyle(color: p.accent, fontWeight: FontWeight.w800),
+                        style: TextStyle(color: p.accent, fontWeight: FontWeight.w700),
                       ),
                     ),
                   ),
@@ -338,14 +349,16 @@ class _CompanionCard extends StatelessWidget {
 /// Нүүр хуудасны богино холбоос карт (амжилт, амьсгал).
 class _QuickCard extends StatelessWidget {
   const _QuickCard({
-    required this.emoji,
+    required this.icon,
+    required this.color,
     required this.title,
     required this.subtitle,
     required this.onTap,
     super.key,
   });
 
-  final String emoji;
+  final IconData icon;
+  final Color color;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
@@ -358,7 +371,7 @@ class _QuickCard extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          Text(emoji, style: const TextStyle(fontSize: 28)),
+          IconBox(icon: icon, color: color),
           const SizedBox(width: 10),
           Expanded(
             child: Column(
@@ -368,7 +381,7 @@ class _QuickCard extends StatelessWidget {
                   title,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                 ),
                 Text(
                   subtitle,
@@ -422,27 +435,34 @@ class _WeekDayCell extends StatelessWidget {
               style: TextStyle(
                 fontSize: 10,
                 color: p.muted,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               '${day.day}',
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 4),
-            CircleAvatar(
-              radius: 17,
-              backgroundColor: filled ? p.forest : Colors.transparent,
+            SizedBox.square(
+              dimension: 32,
               child: entry != null
-                  ? Text(entry!.mood.emoji, style: const TextStyle(fontSize: 21))
-                  : Text(
-                      showPlus ? '+' : '',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: filled ? p.onForest : p.muted,
+                  ? MoodFace(entry!.mood, size: 32)
+                  : DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: filled ? p.forest : Colors.transparent,
+                        border: showPlus && !filled
+                            ? Border.all(color: p.line, width: 1.5)
+                            : null,
                       ),
+                      child: showPlus
+                          ? Icon(
+                              AppIcons.plus,
+                              size: 15,
+                              color: filled ? p.onForest : p.muted,
+                            )
+                          : null,
                     ),
             ),
           ],

@@ -17,6 +17,8 @@ class StatsBucket {
 class StatsResult {
   const StatsResult({
     required this.buckets,
+    required this.trend,
+    required this.moodCounts,
     required this.count,
     required this.avg,
     required this.prevAvg,
@@ -25,6 +27,12 @@ class StatsResult {
   });
 
   final List<StatsBucket> buckets;
+
+  /// Шугаман графикийн цэгүүд: 7 хоног ба сард өдөр бүр, жилд сар бүр.
+  final List<StatsBucket> trend;
+
+  /// Мэдрэмж тус бүрийн тэмдэглэлийн тоо (дугуй диаграммд).
+  final Map<MoodType, int> moodCounts;
   final int count;
   final double? avg;
   final double? prevAvg;
@@ -103,6 +111,23 @@ StatsResult computeStats(AppState app, StatsRange range, S s, DateTime now) {
       }
   }
 
+  // Шугаман график: сард 7 хоногоор биш өдөр бүрээр харуулна.
+  final List<StatsBucket> trend;
+  if (range == StatsRange.month) {
+    trend = [];
+    for (var d = 1; d <= daysInMonth(today.year, today.month); d++) {
+      final day = DateTime(today.year, today.month, d);
+      final list = entries.where((e) => sameDay(e.date, day)).toList();
+      trend.add(StatsBucket(
+        label: '$d',
+        avg: AppState.averageScore(list),
+        count: list.length,
+      ));
+    }
+  } else {
+    trend = buckets;
+  }
+
   // Хамгийн их тохиолдсон мэдрэмж ба шошго
   final moodCounts = <MoodType, int>{};
   final tagCounts = <String, int>{};
@@ -133,6 +158,8 @@ StatsResult computeStats(AppState app, StatsRange range, S s, DateTime now) {
 
   return StatsResult(
     buckets: buckets,
+    trend: trend,
+    moodCounts: Map.unmodifiable(moodCounts),
     count: entries.length,
     avg: AppState.averageScore(entries),
     prevAvg: AppState.averageScore(prevEntries),

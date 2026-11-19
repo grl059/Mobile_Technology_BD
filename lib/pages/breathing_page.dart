@@ -112,6 +112,7 @@ class _BreathingPageState extends State<BreathingPage>
       _run = _Run.done;
       _newBadges = fresh;
     });
+    if (fresh.isNotEmpty) showConfetti(context);
   }
 
   void _reset() {

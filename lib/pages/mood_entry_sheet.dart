@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../core/core.dart';
 import '../models/models.dart';
@@ -62,6 +63,8 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
       note: _note.text,
       tags: _tags.toList(),
     );
+    // Шинэ тэмдэг нээгдвэл confetti (цонх хаагдахаас өмнө дуудна).
+    if (fresh.isNotEmpty) showConfetti(context);
     navigator.pop();
 
     // Хүнд мэдрэмж бол амьсгалын дасгал санал болгоно; шинэ тэмдэг нээгдвэл
@@ -180,7 +183,10 @@ class _MoodEntrySheetState extends State<MoodEntrySheet> {
                           label: s(MoodType.values[i].labelKey),
                           selected: _selected == MoodType.values[i],
                           isLast: i == MoodType.values.length - 1,
-                          onTap: () => setState(() => _selected = MoodType.values[i]),
+                          onTap: () {
+                            HapticFeedback.selectionClick();
+                            setState(() => _selected = MoodType.values[i]);
+                          },
                         ),
                       ),
                   ],
@@ -297,9 +303,8 @@ class _MoodOption extends StatelessWidget {
         ),
         child: Column(
           children: [
-            AnimatedScale(
-              scale: selected ? 1.08 : 1,
-              duration: const Duration(milliseconds: 180),
+            Bounce(
+              active: selected,
               child: MoodFace(mood, size: 32),
             ),
             const SizedBox(height: 6),

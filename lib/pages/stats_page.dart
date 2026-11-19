@@ -114,11 +114,6 @@ class _StatsPageState extends State<StatsPage> {
     final avgMood = avg == null ? null : MoodTypeX.fromScore(avg);
     final change = result.changePct;
     final topMood = result.topMood;
-    final barWidth = switch (_range) {
-      StatsRange.week => 22.0,
-      StatsRange.month => 34.0,
-      StatsRange.year => 13.0,
-    };
 
     return ScreenPage(
       children: [
@@ -236,34 +231,11 @@ class _StatsPageState extends State<StatsPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              SizedBox(
-                height: 170,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    for (final bucket in result.buckets)
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: _Bar(bucket: bucket, width: barWidth),
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                bucket.label,
-                                style: TextStyle(fontSize: 10, color: p.muted),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
+              Eyebrow(s('stats.trend')),
+              const SizedBox(height: 10),
+              MoodLineChart(
+                values: [for (final b in result.trend) b.avg],
+                labels: [for (final b in result.trend) b.label],
               ),
               if (result.count == 0) ...[
                 const SizedBox(height: 14),
@@ -272,6 +244,17 @@ class _StatsPageState extends State<StatsPage> {
                   style: TextStyle(fontSize: 12, color: p.muted, height: 1.5),
                 ),
               ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 17),
+        SoftCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Eyebrow(s('stats.breakdown')),
+              const SizedBox(height: 14),
+              MoodBreakdown(counts: result.moodCounts),
             ],
           ),
         ),
@@ -364,7 +347,10 @@ class _StatsPageState extends State<StatsPage> {
             const SizedBox(width: 10),
             Expanded(
               child: StatTile(
-                leading: const IconBox(icon: AppIcons.flame, color: Color(0xFFE98A45)),
+                leading: Pulse(
+                  value: app.streak,
+                  child: const IconBox(icon: AppIcons.flame, color: Color(0xFFE98A45)),
+                ),
                 label: s('stats.streak'),
                 value: s.f('stats.daysValue', {'n': '${app.streak}'}),
               ),
@@ -372,54 +358,6 @@ class _StatsPageState extends State<StatsPage> {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _Bar extends StatelessWidget {
-  const _Bar({required this.bucket, required this.width});
-
-  final StatsBucket bucket;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    final p = context.pal;
-    final avg = bucket.avg;
-    if (avg == null) {
-      return Container(
-        width: width,
-        height: 6,
-        decoration: BoxDecoration(
-          color: p.soft,
-          borderRadius: BorderRadius.circular(4),
-        ),
-      );
-    }
-    final factor = (avg / 5).clamp(.22, 1.0).toDouble();
-    final mood = MoodTypeX.fromScore(avg);
-    return FractionallySizedBox(
-      heightFactor: factor,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          MoodFace(mood, size: 14),
-          const SizedBox(height: 4),
-          Expanded(
-            child: Container(
-              width: width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [p.accent, p.accent.withAlpha(70)],
-                ),
-                borderRadius: BorderRadius.circular(9),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

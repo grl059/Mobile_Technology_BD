@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../core/core.dart';
-import '../models/models.dart';
 import '../state/app_scope.dart';
 import '../state/app_state.dart';
 import '../widgets/widgets.dart';
@@ -459,17 +458,6 @@ class _HeroBanner extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    for (final mood in MoodType.values)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: MoodFace(mood, size: 26),
-                      ),
-                  ],
-                ),
-                const SizedBox(height: 10),
                 Text(
                   title,
                   textAlign: TextAlign.center,

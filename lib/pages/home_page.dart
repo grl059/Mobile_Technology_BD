@@ -99,7 +99,10 @@ class HomePage extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    const Icon(AppIcons.flame, size: 15, color: _flameColor),
+                    Pulse(
+                      value: streak,
+                      child: const Icon(AppIcons.flame, size: 15, color: _flameColor),
+                    ),
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
